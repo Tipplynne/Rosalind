@@ -1,14 +1,15 @@
 #this is a function to solve the DNA reverse complement problem on Rosalind, in the "Bioinformatics Stronghold" set
 
 def rev_complement():
-	#get string chop into words
+	#get string 
 	s = input("Please input DNA to get reverse complement: ")
 	#first reverse
 	rev_s = s.strip()[::-1]
-	#split string into elements and loop through, replacing elements conditionally
-
+	
 	#the following did not work, because the whole string could be replaced twice -blush
 	#s_complement = s.replace("T","A").replace("A", "T").replace("C","G").replace("G","C")
+
+	#instead, split string into elements and loop through, replacing elements conditionally
 	letters = list(rev_s)
 	complist = []
 	for i in letters:
