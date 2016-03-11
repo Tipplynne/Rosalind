@@ -1,3 +1,5 @@
+#locate_restrictionsfailcode
+
 #this is a script to solve the find restction sites problem on Rosalind, in the "Bioinformatics Stronghold" set
 
 #create a file loading function
@@ -43,92 +45,56 @@ def complement(s):
 	s_complement = ''.join(complist)
 	return s_complement
 
+#create a palindrome recognition function
+def find_palin(s, t):
+
+	#going to use a df approach again, stealing code from yet another problem (hamming.py, this folder)
+	#convert strings to lists, cleaning up on the way
+	s_el = list(s.strip())
+	t_el = list(t.strip())
+
+	#Put my lists into a df:
+	import pandas as pd
+
+	pal_df = pd.DataFrame({'Original' : s_el,
+ 				'Complement' : t_el,
+  				})
+	
 	#create new fxn, for detecting the sructure of a palindrome, constraints on palindrome being 4-12bp. The seeker will function at each position between the 2nd and 2nd last positions, seeking outwards from the positions between two palindromic pairs for a max of 6 steps, provided a minimum of two is met (ie. a max palindromic size of 12). Ideally want to do this taking note of locations, and attaching them to their respective lengths. Not part of this problem, but I also want to create a list of restriction sequences on the way, and count their occurances, which might be useful in other ways
 
-def seeker(s,c):
-	length = 0
-	l = []
-	restr = ''
-#start a counter
-	i = 0
-	#print(s.tolist())
-	for i in range(len(s)):	#for each base in sequence
-		print("i="+str(i))	
-		j = 11		#reset j (i.e. start new palindrome search)
-		next = 0	#next counter tracks size & position of each pal base
+	def seeker(rows):
+		length = 0
+		l = []
 		restr = ''
-		#for each of (start w/ max 12) bases upstream
-		while j >= 0:
+	#start a counter
+		i = 0
+		for i in pal_df.index.tolist()[1:]:
+			print(i)
+			#pass
+			if rows[1] == pal_df['Complement'][i-1] and rows[0] == pal_df['Original'][i-1]: #if our rowpair and adjacent left pair are palindromic:
+				
+				length = length+2
+				l.append(pal_df['Original'][i-1])
+				l.append(pal_df['Original'][i])
 			
-			#if we run out of string
-			if j+i >= len(s):
-				print("if happened")
-				j += -1
-				
+				restr = ''.join(l)
+				i += 1
+				return (restr, length)
 
-			#if we have a furthermost match
-			elif s[i+next] == c[i+j]:	
-				print("elif1 happened")
-				length = length+1
-				print(length)
-				restr = restr + s[i+next]
-				print(restr)
-				next += 1	
-				#print("next="+str(next))
-				j += -1
-				#print("j="+str(j)+" pos "+c[i+j])
-				
-				if j == -1 and len(restr) > 3:
-					print("miracle happened")
-					l.append((restr, i+1, length))
-					length = 0
-				
-					break
-			
 
-			#if we have a pal with a false start
-			elif s[i+next] != c[i+j] and length > 0: #likely bug here - fixed?
+	#		elif rows[1] == pal_df[i+1]['Complement'] and rows[0] == pal_df[i+1]['Original']: #if our rowpair and adjacent right pair are palindromic:
+	#			length = length+2
+	#			restr = restr.append(pal_df[i]['Original'],pal_df[i+1]['Original'])
 
-				print("elif3 happened")
-				length = 0
-				print(length)
-				next = 0
-				restr = ''
-				j += -1
-				#print("j="+str(j)+" pos "+c[i+j])
-				
-			
-			#if not a furthermost match, move to next furthest
 			else:
-
-				print("else happened")
-				j += -1
-				#print("j="+str(j)+" pos "+c[i+j])
-	#check
-	print(l)	
+				i += 1
+				return 0
+			i += 1
 	
-
+	pal_df["pal"] = [seeker(row) for row in pal_df.itertuples(False)]
+	
+	print(pal_df)
 
 seq = fa_load()
-comp = complement(seq)
-result = seeker(seq, comp)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+comp_seq = complement(seq)
+find_palin(seq, comp_seq)
