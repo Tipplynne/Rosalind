@@ -53,40 +53,40 @@ def seeker(s,c):
 	i = 0
 	
 	for i in range(len(s)):	#for each base in sequence	
-		j = 11		#reset j (i.e. start new palindrome search) at max 12bp
-		next = 0	#next counter tracks position of each pal bp from start
+		j = 1		#reset j (i.e. start new palindrome search), tracks bps right
+		next = 0	#next tracks position of leftside pal bp from midpoint
 		restr = ''	#creates pal sequence
-
-		#for each of (start w/ max 12) bases upstream
-		while j >= 0:
+		
+		#for each of (start w/ max 6) bases up- and down-stream
+		while j < 7:
 			
-			#if we run out of string
-			if j+i >= len(s):
-				j += -1
+			#if we run out of string to the right or left
+			if j+i >= len(s) or i+next < 0:
 
-			#if we have a furthermost match
-			elif s[i+next] == c[i+j]:	
-				length = length+1
-				restr = restr + s[i+next]
-				next += 1	
-				j += -1
-				
-				#if we get to innermost match and 4 <= pal length <= 12
-				if j == -1 and len(restr) > 3:
-					l.append((restr, i+1, length)) #imutable tupleness
-					length = 0
-					break
-
-			#if we have a pal with a false start
-			elif s[i+next] != c[i+j] and length > 0: 
 				length = 0
-				next = 0
-				restr = ''
-				j += -1
-				
-			#if not a furthermost match, move to next furthest
-			else:
-				j += -1
+				break
+
+			#if we have a innermost match
+			elif s[i+next] == c[i+j]:
+
+				length = length+2
+				restr = s[i+next:j+i+1]
+				#print(restr)
+				next += -1 	#track bp to the right
+				j += 1		#track bp to the left
+			
+				#if we get to outermost match and 4 <= pal length <= 12
+				if len(restr) > 3:
+
+					#imutable tupleness
+					l.append((restr, i+2-int((length)/2), length))
+
+			#if not a match
+			elif s[i+next] != c[i+j]:	
+
+				length = 0
+				break
+
 	#output
 	return l	
 
