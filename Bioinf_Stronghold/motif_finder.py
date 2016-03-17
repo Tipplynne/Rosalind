@@ -1,4 +1,4 @@
-# This script calculates the number of occurances of a simple motif in a given sequence
+# This script calculates the number of occurances of a simple motif in a given sequence as part of the Rosalind Bioinformatics stronghold set
 
 def find_motif():
 	#get the input sequences
