@@ -1,0 +1,41 @@
+
+
+	
+find_motif()
+
+# steal a function from a previous problem set (complement.py, in this folder) and modify it to convert DNA template to its complementary (coding) strand
+def complement(s):
+	
+	#split string into elements and loop through, replacing elements conditionally
+	letters = list(s.strip())
+	complist = []
+	for i in letters:
+		if i == "T":
+			complist.append(i.replace(i, "A"))
+		elif i == "A":
+			complist.append(i.replace(i, "T"))
+		elif i == "C":
+			complist.append(i.replace(i, "G"))
+		elif i == "G":
+			complist.append(i.replace(i, "C"))
+		else:
+			print("Warning! Non-standard base symbols in sequence!")
+
+	#join elements of complist to get complement
+	s_complement = ''.join(complist)
+	return s_complement
+
+#steal another script to transcribe the complimentary DNA to RNA
+
+def transcribe():
+	#get string
+	t = input("Please input DNA to be transcribed: ")
+
+	t_trans = t.replace("T","U")
+	
+	return t_trans
+
+	
+print(transcribe())
+
+

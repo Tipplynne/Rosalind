@@ -8,7 +8,7 @@ def find_motif():
 	#Quickest and most obvious solution is to use regex
 	import regex as re
 
-	#Create regex
+	#Create regex -shit what does the re.I package do again?
 	mox = re.compile(m, re.I)
 	
 	#create an iterator
