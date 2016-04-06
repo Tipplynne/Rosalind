@@ -17,8 +17,10 @@ def fa_load():
 			
 	#get the DNA string
 	seq = stringlist[0].split("\n")
-	s = seq[1]
-	
+	seq.remove('')
+	seq.remove(seq[0])
+	s = ''.join(seq)
+
 	#get motifs
 	i = 1
 	motlist = []
@@ -49,14 +51,11 @@ proc_dna = excise_introns(dna, intronlist)
 def transcribe(proc_dna):
 	#get string
 	t = proc_dna
-
 	t_trans = t.replace("T","U")
 	
 	return t_trans
 	
-
 transcript = transcribe(proc_dna)
-print(transcript)
 
 #now steal pretty much all the translation.py code from the translation problem
 import pandas as pd
@@ -92,7 +91,6 @@ def aa_find(codon):
 #scan the rna for the start codon
 i=0
 while i < len(transcript):
-	print(i)
 	poss_codon = transcript[0+i:3+i]
 	if aa_find(poss_codon) == "M":
 		start = i
