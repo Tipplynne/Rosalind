@@ -9,11 +9,23 @@ k = int(input("Please input pairs generated at each reproduction event: "))
 
 F1 = 1
 F2 = 1
-for i in n:
+F=1
+n= n-2
+i=0
+while i < n:
+
+	F2 = F*k #the problem here is coding the delay, the new bunnies need some time to mature
+	print(F2)
+
 	F = F2 + F1
-	F2 = F1*k #bug here
-	F1 = F - F2
+	print(F)
+
+	F1 = F
+	print(F1)
+
 	i += 1
+	print(i)
+
 
 print(F)
 	
