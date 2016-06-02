@@ -1,4 +1,4 @@
-# This script calculates numbers of rabbits in a population using dynamic programming to implement a recurrence relation as part of the Rosalind Bioinformatics Stronghold problem set
+# This script calculates numbers of rabbits in a population using dynamic programming to implement a recurrence relation as part of the Rosalind Bioinformatics Stronghold problem set RRR
 
 #First get input values n and k.
 n = int(input("Please input generation number n: "))
