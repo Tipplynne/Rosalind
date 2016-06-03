@@ -14,18 +14,17 @@ n= n-2
 i=0
 while i < n:
 
-	F2 = F*k #the problem here is coding the delay, the new bunnies need some time to mature
+	F2 = (F1-i)*k
 	print(F2)
 
 	F = F2 + F1
 	print(F)
 
-	F1 = F
+	F1 = F-i
 	print(F1)
 
 	i += 1
 	print(i)
-
 
 print(F)
 	
