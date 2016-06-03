@@ -17,10 +17,10 @@ while i < n:
 	F2 = (F1-i)*k
 	print(F2)
 
-	F = F2 + F1
+	F = F2 + F1 - (i*2) 
 	print(F)
 
-	F1 = F-i
+	F1 = F-(i*k)
 	print(F1)
 
 	i += 1
