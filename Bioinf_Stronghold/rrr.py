@@ -30,7 +30,7 @@ def breed(gen, juv):
 #but this falls apart at month 5, i.e. the function hasn't got to either of the base cases by calling itself once. It needs to call itself recursively until it satisfies the base cases. The way I understand it is that the following line of code calculates backwards, calling itself everytime the base cases are not met. It's possible to check this with a printed counter beep. And would you know? this thing does not beep like fibonacci; but instead like fibonacci +1: with sequential increase in generation time from 5 onward: 1 2 4 7 12 20 33.
  
  else:
-  print("beep")
+  #print("beep")
   return (f1+(f2*juv))
   
 print breed(n,k)
