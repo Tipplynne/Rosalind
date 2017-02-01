@@ -17,27 +17,21 @@ def pattern_load():
 			
  return stringlist[0], stringlist[1]
 
+#sliding function, which identifies and counts matches
 def slide(seq, pat):
 
  its = 0
  i = 0
- print(len(seq))
- print(len(pat))
- print(seq[i:len(pat)])
-
  while i < (len(seq)):
   if seq[i:i+len(pat)] == pat:
    its += 1
    i += 1
-   
   else:
    i += 1
 
  return its
 
-
+#run functions, out put no of matches
 sequence, pattern = pattern_load()
-
 iterations = slide(sequence, pattern)
-
 print(iterations)
