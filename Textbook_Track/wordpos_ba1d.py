@@ -1,4 +1,4 @@
-#solution to problem BA1C in rosalind's textbook track set find the position of a given k-mer/"word" in a DNA sequence
+#solution to problem BA1D in rosalind's textbook track set find the position of a given k-mer/"word" in a DNA sequence
 
 #first import the data
 def pattern_load():
