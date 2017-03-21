@@ -2,13 +2,13 @@
 
 #create function
 def HammingDistance(p,q):
- print(sum(b1!=b2 for b1,b2 in zip(p,q)))
+ return(sum(b1!=b2 for b1,b2 in zip(p,q)))
 
 #Get the sequences
 with open('rosalind_ba1g.txt', 'r') as inputfile:
  p = inputfile.readline().strip()
  q = inputfile.readline().strip()
 
-HammingDistance(p,q)
+print(HammingDistance(p,q))
 
 #Note: can also use biopython's pairwise2.align.global function, which may be more applicable to later problems, but here is just overkill
