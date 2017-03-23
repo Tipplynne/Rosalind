@@ -2,7 +2,8 @@
 
 #pattern constraints k <= 12, d <= 3
 
-wt = ACGTTGCATGTC
+import pandas as pd
+import regex as re
 
 def single_mutants(wt, key):
 
@@ -79,5 +80,63 @@ def double_mutants(library):
   ddf = ddf.append(single_mutants(seq, key), ignore_index = True)
  
  return ddf.drop_duplicates(ddf.columns[0:(shape-1)], keep = 'last').reset_index(drop = True)
+
+def triple_mutants(library):
+ 
+#essentially what we're doing here is looping through the double mutant library, calling the single_mutant function again on each double_mutant to make the triple mutants (this will naturally create duplicates). serially append each sub df to make double mutant df, then drop duplicates.
+ ddf = pd.DataFrame()
+ shape = len(ddf.columns)
+
+ for key, seq in library.items():
+  ddf = ddf.append(single_mutants(seq, key), ignore_index = True)
+ 
+ return ddf.drop_duplicates(ddf.columns[0:(shape-1)], keep = 'last').reset_index(drop = True)
+
+def d_cons(wt, d):
+ 
+ kmers = []
+
+ if d == 3:
+  df = single_mutants(wt, '')
+  shape = len(df.columns)
+  for i in range(shape):
+   kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
+  
+  lib2 = library_maker(df)
+
+  df = double_mutants(lib2)
+  shape = len(df.columns)
+  for i in range(shape):
+   kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
+
+  lib3 = library_maker(df)
+
+  df = triple_mutants(lib3)
+  shape = len(df.columns)
+  for i in range(shape):
+   kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
+
+ elif d == 2:
+
+  df = single_mutants(wt, '')
+  shape = len(df.columns)
+  for i in range(shape):
+   kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
+  
+  lib2 = library_maker(df)
+
+  df = double_mutants(lib2)
+  shape = len(df.columns)
+  for i in range(shape):
+   kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
+
+ elif d == 1:
+
+  df = single_mutants(wt, '')
+  shape = len(df.columns)
+  for i in range(shape):
+   kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
+  
+ return set(kmers)
 
                 

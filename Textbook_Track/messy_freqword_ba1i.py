@@ -11,6 +11,7 @@ def messy_posfind(dna, pattern, k, d):
    i += 1
   else:
    i += 1
+ #print(posse)
  return posse
 
 #function to split the DNA into k-mers, 
@@ -37,14 +38,27 @@ with open('rosalind_ba1i.txt', 'r') as inputfile:
  inps = inputfile.readline().strip().split(" ")
  k, d = int(inps[0]), int(inps[1])
 
-#run fxns
+#first get list of all the occuring kmers, of k size
 kmers = dnaread(dna, k)
 
-#open dictionary of matched mismatches
-occurance = []
-for kmer in kmers:
- occurance.append(messy_posfind(dna, kmer, k, d))
+#get functions from other file to list the mutants of all kmers
+from assistant import *
 
+#open list of matched mismatches
+occurance = []
+mutant_kmers = []
+
+#for each of the possible kmers:
+for kmer in kmers:
+ #create all possible variants, with number of mutations representing d
+ mutant_kmers = d_cons(kmer, d)
+ occurance.append(kmer)
+ #for each variant, check whether there are hits, with minimum number of mismatches
+ for mu in mutant_kmers:
+  temp = messy_posfind(dna, mu, k, d)
+  #this is just extra formatting so I dont get lists within lists
+  for el in temp:
+   occurance.append(el)
 print(occurance)
 
 max_kmers = mode(occurance)
