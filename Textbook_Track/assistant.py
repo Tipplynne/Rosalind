@@ -98,51 +98,53 @@ def d_cons(wt, d):
  kmers = []
 
  if d == 3:
-  kmers.append(wt)
+  
   df = single_mutants(wt, '')
+  dft = df.T
   shape = len(df.columns)
-  for i in range(shape):
+  for i in dft:
    kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
   
   lib2 = library_maker(df)
 
   df = double_mutants(lib2)
+  dft = df.T
   shape = len(df.columns)
-  for i in range(shape):
+  for i in dft:
    kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
 
   lib3 = library_maker(df)
 
   df = triple_mutants(lib3)
+  dft = df.T
   shape = len(df.columns)
-  for i in range(shape):
+  for i in dft:
    kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
 
  elif d == 2:
-  kmers.append(wt)
+  
   df = single_mutants(wt, '')
+  dft = df.T
   shape = len(df.columns)
-  for i in range(shape):
+  for i in dft:
    kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
   
   lib2 = library_maker(df)
 
   df = double_mutants(lib2)
+  dft = df.T
   shape = len(df.columns)
-  for i in range(shape):
+  for i in dft:
    kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
 
  elif d == 1:
-  kmers.append(wt)
+ 
   df = single_mutants(wt, '')
   dft = df.T
   shape = len(df.columns)
-  print(shape)
-
   for i in dft:
    kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
   
- print(kmers)
- return set(kmers)
+ return kmers
 
                 

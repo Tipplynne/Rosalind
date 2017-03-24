@@ -4,10 +4,11 @@
 #function to find and store k-mer positions in a list, mod from ba1d
 def messy_posfind(dna, pattern, k, d):
  i = 0
- posse = [pattern]
+ posse = []
  while i <= (len(dna) - k):
   if (HammingDistance(dna[i:i+k], pattern)) <= d:
    posse.append(dna[i:i+k])
+   posse.append(pattern)
    i += 1
   else:
    i += 1
@@ -21,6 +22,7 @@ def dnaread(dna, k):
  while i <= (len(dna) - k):
   kmers.append(dna[i:i+k])
   i += 1
+ #print(kmers)
  return set(kmers)
 
 #Hd function
@@ -40,28 +42,29 @@ with open('rosalind_ba1i.txt', 'r') as inputfile:
 
 #first get list of all the occuring kmers, of k size
 kmers = dnaread(dna, k)
-
+#print(kmers)
 #get functions from other file to list the mutants of all kmers
 from assistant import *
 
 #open list of matched mismatches
-occurance = []
-mutant_kmers = []
 
+mutant_kmers = []
+all_kmers = []
 #for each of the possible kmers:
 for kmer in kmers:
+ all_kmers.append(kmer)
  #create all possible variants, with number of mutations representing d
  mutant_kmers = d_cons(kmer, d)
- occurance.append(kmer)
- #for each variant, check whether there are hits, with minimum number of mismatches
- for mu in mutant_kmers:
-  temp = messy_posfind(dna, mu, k, d)
-  #this is just extra formatting so I dont get lists within lists
-  for el in temp:
-   occurance.append(el)
-print(occurance)
-
-max_kmers = mode(occurance)
+ for e in mutant_kmers:
+  all_kmers.append(e)
+temp = []
+counts = []
+final = set(all_kmers)
+for fin in final:
+ temp = messy_posfind(dna, fin, k, d)
+ for el in temp:
+  counts.append(el)
+max_kmers = mode(counts)
 
 for word in max_kmers:
  print(word, end=' ')
