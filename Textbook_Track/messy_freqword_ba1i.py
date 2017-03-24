@@ -11,8 +11,8 @@ def messy_posfind(dna, pattern, k, d):
    i += 1
   else:
    i += 1
- #print(posse)
- return posse
+ print(posse)
+ return set(posse)
 
 #function to split the DNA into k-mers, 
 def dnaread(dna, k):

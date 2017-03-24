@@ -48,12 +48,13 @@ def single_mutants(wt, key):
  #replace the rest of the dataframe (empty mutant seq bases) with wildtype bases
  df = df.fillna(df.ix[0,df.columns])
  
+ 
  #change the column name for the mutations
  df = df.rename(columns = {mut_colno: 'Mutation'})
 
  #drop the wild type and rows where no mutation info was set, i.e where the same mutation has already happened
  df = df[df.Mutation.notnull()]
-
+ 
  return df.reset_index(drop = True)
 
 
@@ -83,7 +84,7 @@ def double_mutants(library):
 
 def triple_mutants(library):
  
-#essentially what we're doing here is looping through the double mutant library, calling the single_mutant function again on each double_mutant to make the triple mutants (this will naturally create duplicates). serially append each sub df to make double mutant df, then drop duplicates.
+#essentially what we're doing here is looping through the double mutant library, calling the single_mutant function again on each double_mutant to make the triple mutants (this will naturally create duplicates). serially append each sub df to make triple mutant df, then drop duplicates.
  ddf = pd.DataFrame()
  shape = len(ddf.columns)
 
@@ -97,6 +98,7 @@ def d_cons(wt, d):
  kmers = []
 
  if d == 3:
+  kmers.append(wt)
   df = single_mutants(wt, '')
   shape = len(df.columns)
   for i in range(shape):
@@ -117,7 +119,7 @@ def d_cons(wt, d):
    kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
 
  elif d == 2:
-
+  kmers.append(wt)
   df = single_mutants(wt, '')
   shape = len(df.columns)
   for i in range(shape):
@@ -131,12 +133,16 @@ def d_cons(wt, d):
    kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
 
  elif d == 1:
-
+  kmers.append(wt)
   df = single_mutants(wt, '')
+  dft = df.T
   shape = len(df.columns)
-  for i in range(shape):
+  print(shape)
+
+  for i in dft:
    kmers.append(df.ix[i,0:(shape-1)].str.cat().upper())
   
+ print(kmers)
  return set(kmers)
 
                 
