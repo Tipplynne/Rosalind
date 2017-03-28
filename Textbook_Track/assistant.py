@@ -1,10 +1,11 @@
-#This is code, taken from another coding project of mine, needs to be modified and used to create the library of all possible, single, double and triple replacement mutants for each kmer in the problem solution ba1i
+#This is code, taken from another coding project, is modified and used to create the library of all possible, single, double and triple replacement mutants for each kmer in the problem solution ba1i
 
 #pattern constraints k <= 12, d <= 3
 
 import pandas as pd
 import regex as re
 
+#make a library of single mutants, i.e. d=1
 def single_mutants(wt, key):
 
  #Read in the sequence and send to a dataframe
@@ -93,6 +94,8 @@ def triple_mutants(library):
  
  return ddf.drop_duplicates(ddf.columns[0:(shape-1)], keep = 'last').reset_index(drop = True)
 
+
+#This writes the various mutant libraries to strings and and puts them in lists
 def d_cons(wt, d):
  
  kmers = []
