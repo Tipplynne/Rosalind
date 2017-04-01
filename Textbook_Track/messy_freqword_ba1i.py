@@ -9,14 +9,13 @@
 from assistant import *
 
 #function to split the DNA into k-mers
-
 def dnaread(dna, k):
  i = 0
  kmers = [] 
  while i <= (len(dna) - k):
   kmers.append(dna[i:i+k])
   i += 1
- #print(kmers)
+
  return set(kmers)
 
 #Hd function
@@ -49,13 +48,6 @@ def messy_posfind(dna, pattern, k, d):
 
  return (hits, pattern)
 
-#use a fxn to find multiple modes, this step seems to take the most time, I hate using lamda fxns but stack overflow don't think there is any faster way to write a 'mode' function
-
-def mode(array):
-    most = max(list(map(array.count, array)))
-    return list(set(filter(lambda x: array.count(x) == most, array)))
-
-
 #Get the input data
 with open('rosalind_ba1i.txt', 'r') as inputfile:
  dna = inputfile.readline().strip()
@@ -71,29 +63,26 @@ mutant_kmers = []
 all_kmers = []
 
 #for each of the possible kmers:
-#######
-tic()
-#Most amount of time
 for kmer in kmers:
  #create all possible variants, with number of mutations representing d
  mutant_kmers = list(mismatch(kmer, d))
  #this step just so I don't get lists within list
  for e in mutant_kmers:
   all_kmers.append(e)
-toc()
-#########
 
-temp = []
-counts = []
-
+counts = [(0, 'empty')]
 final = set(all_kmers)
-tic()
+
+#longest time
 from heapq import heappushpop, heappop, nlargest, heappush
 for fin in final:
  heappush(counts, (messy_posfind(dna, fin, k, d)))
-toc()
 
-
-print(nlargest(4, counts, key=lambda x: x[0]))
+largestlist = nlargest(100, counts, key=lambda x: x[0])
+maxi = largestlist[0][0]
+i = 0
+while maxi == largestlist[i][0]:
+  print(largestlist[i][1], end = ' ')
+  i += 1
 
 
